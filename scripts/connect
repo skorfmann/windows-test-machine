@@ -1,0 +1,18 @@
+#!/bin/bash -e
+
+cd $(dirname $0)/..
+
+LOCAL_SSM_PORT=55678
+SSM_PROXY="localhost:${LOCAL_SSM_PORT}"
+TMPFILE=/tmp/rdpconnect.rdp
+USER=$(terraform output -json | jq -r '.User.value | first' | tr -d '\n')
+
+cat <<EOF > ${TMPFILE}
+auto connect:i:1
+full address:s:${SSM_PROXY}
+username:s:${USER}
+EOF
+
+terraform output -json | jq -r '.Password.value | first' | tr -d '\n' | pbcopy
+
+open -na "/Applications/Microsoft Remote Desktop.app/Contents/MacOS/Microsoft Remote Desktop" ${TMPFILE}

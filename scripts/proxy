@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+cd $(dirname $0)/..
+
+LOCAL_SSM_PORT=55678
+INSTANCE=$(terraform output -json | jq -r '.InstanceId.value | first' | tr -d '\n')
+aws ssm start-session --target ${INSTANCE} --document-name AWS-StartPortForwardingSession --parameters "localPortNumber=${LOCAL_SSM_PORT},portNumber=3389"
