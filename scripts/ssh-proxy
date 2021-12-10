@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+export AWS_PROFILE=<REPLACE ME>
+export AWS_DEFAULT_REGION=<REPLACE ME>
+ONE_TIME_KEY_FILE_NAME="<REPLACE ME>"
+
+USER=$1
+HOSTNAME=$2
+PORT=$3
+
+ssh-add -t 60 ${ONE_TIME_KEY_FILE_NAME}
+
+aws ssm start-session \
+  --target ${HOSTNAME} \
+  --document-name AWS-StartSSHSession \
+  --parameters "portNumber=${PORT}"

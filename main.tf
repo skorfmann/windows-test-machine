@@ -88,6 +88,12 @@ resource "aws_instance" "ec2" {
   user_data = base64encode(file("./userdata.ps1"))
 }
 
+resource "local_file" "private_key" {
+  content         = tls_private_key.example.private_key_pem
+  filename        = "ssh-key.pem"
+  file_permission = "0600"
+}
+
 output "User" {
    value = [
      "Administrator"
