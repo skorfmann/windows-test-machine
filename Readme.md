@@ -12,6 +12,9 @@ brew install --cask microsoft-remote-desktop
 Assumes valid credentials for AWS and the proper AWS_DEFAULT_REGION set in ENV
 
 ```
+# on first run
+terraform init
+
 terraform apply -auto-approve
 ```
 
@@ -23,6 +26,10 @@ The userdata is using the EC2 v2 launch config format - see [here](https://docs.
 
 ```
 ./scripts/proxy
+
+# or with explicit region if it is not configured as your default
+AWS_REGION=eu-central-1 ./scripts/proxy
+
 ```
 
 In another terminal: connect to instance via RDP
