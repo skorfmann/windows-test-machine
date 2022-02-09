@@ -12,6 +12,9 @@ brew install --cask microsoft-remote-desktop
 Assumes valid credentials for AWS and the proper AWS_DEFAULT_REGION set in ENV
 
 ```
+# on first run
+terraform init
+
 terraform apply -auto-approve
 ```
 
